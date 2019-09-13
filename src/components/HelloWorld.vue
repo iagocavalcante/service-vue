@@ -25,14 +25,9 @@ export default {
     this.getPosts()
   },
   methods: {
-    getPosts () {
-      this.PostService.list()
-        .then(response => {
-          this.posts = [...response.data.data]
-        })
-        .catch(error => {
-          console.log('[API ERROR] => ', error)
-        })
+    async getPosts () {
+     const {data} = await this.PostService.list()
+     this.posts = data
     }
   }
 }
