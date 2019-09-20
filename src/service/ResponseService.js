@@ -1,36 +1,38 @@
 const ResponseService = (obj, type, description) => {
   let response = JSON.parse(JSON.stringify(obj)).response
-  return !navigator.onLine ? new Error('Sem acesso à internet, por favor, tente mais tarde') : (!response ? new Error('Servidor indisponivel, tente mais tarde') : verifyStatusResponse(response, type, description))
+  return !navigator.onLine
+    ? new Error('Sem acesso à internet, por favor, tente mais tarde')
+    : (!response ? new Error('Servidor indisponivel, tente mais tarde')
+      : new Error(verifyStatusResponse(response, type, description)))
 }
-
 const verifyStatusResponse = (response, type, description) => {
   let data = response.data
-  let status = response.status
-  let typesStatus = {
-    400: { error: verifyErrorsData(data) },
-    401: { error: new Error('Sessão expirada, por favor , logue novamente') },
-    404: { error: new Error('Endereço de acesso não encontrado') },
-    500: { error: verifyTypeAction(type, description) },
-    503: { error: new Error(`Servidor indisponivel, tente mais tarde`) }
+  let statusHttp = {
+    400: () => verifyErrorsData(data),
+    401: () => 'Sessão expirada. Logue-se novamente',
+    404: () => 'Endereço de acesso não encontrado',
+    500: () => verifyTypeAction(type, description),
+    503: () => `Servidor indisponível. Tente novamente mais tarde`,
+    'default': () => 'Erro de verificação do status da requisição'
   }
-  let action = typesStatus[status]
-  return action.error
+  return (statusHttp[response.status] || statusHttp['default'])()
 }
 const verifyErrorsData = (data) => {
-  return !data.errors ? new Error(!data[0] ? '' : data[0].ErrorMessage) : new Error(!data.errors ? '' : data.errors[0].ErrorMessage)
+  return data && data !== {} ? (data.length > 1 ? data : data[0].errorMessage) : 'Existem erros a serem processados'
 }
-
 const verifyTypeAction = (action, description) => {
   let typesAction = {
-    'list': { error: new Error(`Não foi possível realizar a listagem, tente mais tarde`) },
-    'get': { error: new Error(`Não foi possível realizar a consulta de ${description}, tente mais tarde`) },
-    'create': { error: new Error('Não foi possível realizar o cadastro, tente mais tarde') },
-    'update': { error: new Error('Não foi possível realizar a edição, tente mais tarde') },
-    'remove': { error: new Error('Não foi possível realizar a exclusão, tente mais tarde') }
+    'list': 'Não foi possível realizar a listagem, tente mais tarde.',
+    'get': `Não foi possível realizar a consulta de ${description}, tente mais tarde.`,
+    'create': 'Não foi possível realizar o cadastro, tente mais tarde.',
+    'update': 'Não foi possível realizar a edição, tente mais tarde.',
+    'remove': 'Não foi possível realizar a exclusão, tente mais tarde.',
+    'report': 'Não foi possível realizar a geração do relatório, verifique sua consulta e tente novamente.',
+    'login': 'Não foi possível realizar o login, tente mais tarde.',
+    'default': 'Erro de verificação'
   }
-  return typesAction[action].error
+  return (typesAction[action] || typesAction['default'])
 }
-
 export {
   ResponseService
 }

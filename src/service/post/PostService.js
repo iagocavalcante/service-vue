@@ -1,5 +1,5 @@
 import Api from '@/service/Api'
-import { ResponseService } from '@/service/ResponseService'
+// import { ResponseService } from '@/service/ResponseService'
 
 export default class PostService extends Api {
   constructor () {
