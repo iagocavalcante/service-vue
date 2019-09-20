@@ -5,14 +5,15 @@ export default class API {
     this.api = api
     this.http = http
   }
-  list = () => {
-    return new Promise((resolve, reject) => {
-      http.get(this.api).then((response) => {
-        resolve(response)
-      }).catch((err) => {
-        reject(ResponseService(err, 'list'))
-      })
-    })
+  list = async () => {
+    try {
+      const response = await http.get(this.api)
+      return response.data
+    } catch (error) {
+      return ResponseService(error, 'list')
+      // return err
+      // console.log(ResponseService(error, 'list'))
+    }
   }
   show = ($id) => {
     return new Promise((resolve, reject) => {
