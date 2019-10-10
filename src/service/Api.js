@@ -10,7 +10,7 @@ export default class API {
       const response = await http.get(this.api)
       return response.data
     } catch (error) {
-      return ResponseService(error, 'list')
+      throw ResponseService(error, 'list')
     }
   }
   show = async ($id) => {
@@ -18,7 +18,7 @@ export default class API {
       const response = await http.get(`${this.api}/${$id}`)
       return response.data
     } catch (error) {
-      return ResponseService(error, 'get', 'item')
+      throw ResponseService(error, 'get', 'item')
     }
   }
 
@@ -27,7 +27,7 @@ export default class API {
       const response = await http.post(this.api, $data)
       return response.data
     } catch (error) {
-      return ResponseService(error, 'create')
+      throw ResponseService(error, 'create')
     }
   }
 
@@ -36,7 +36,7 @@ export default class API {
       const response = await http.put(`${this.api}/${$data.id}`, $data)
       return response.data
     } catch (error) {
-      return ResponseService(error, 'update')
+      throw ResponseService(error, 'update')
     }
   }
 
@@ -45,7 +45,7 @@ export default class API {
       const response = await http.delete(`${this.api}/${$id}`)
       return response.data
     } catch (error) {
-      return ResponseService(error, 'remove')
+      throw ResponseService(error, 'remove')
     }
   }
 }
