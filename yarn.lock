@@ -947,10 +947,10 @@
     babel-loader "^8.0.6"
     webpack "^4.0.0"
 
-"@vue/cli-plugin-eslint@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-eslint/-/cli-plugin-eslint-4.0.0.tgz#36500be0e819c5a90ede6ed11888d6cc231ec069"
-  integrity sha512-SRPWGLTq7UQQck6gEUgPJObfM0wC9qaMRVe84YxWqvrEqbB2NjWff9x5GiG2eVgzN930U5NtrU4FOC6K/n2MWQ==
+"@vue/cli-plugin-eslint@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@vue/cli-plugin-eslint/-/cli-plugin-eslint-4.0.1.tgz#b39049b84edd520f43ee8198286d5238553f2256"
+  integrity sha512-oaPz+4tS6ptBlNBfIihw8GSLMnjLNq3yYRtg83hV+A09H4ZytSZ4DM1WRyAzzw0TSbIR5806EPL/rn7XZUTcFQ==
   dependencies:
     "@vue/cli-shared-utils" "^4.0.0"
     eslint-loader "^2.1.2"
