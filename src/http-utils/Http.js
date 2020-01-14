@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-export const http = axios.create({
+export const Http = axios.create({
   baseURL: `${process.env.VUE_APP_HOST}`
 })
-http.interceptors.request.use((config) => {
+Http.interceptors.request.use((config) => {
   const token =  window.localStorage.getItem('token')
 
   if (token) {
