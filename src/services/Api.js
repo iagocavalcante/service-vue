@@ -1,13 +1,12 @@
-import { http } from '@/http-utils/Http'
 import { ResponseService } from './ResponseService'
 export default class API {
-  constructor(api) {
+  constructor(api, http) {
     this.api = api
     this.http = http
   }
   list = async () => {
     try {
-      const response = await http.get(this.api)
+      const response = await this.http.get(this.api)
       return response.data
     } catch (error) {
       throw ResponseService(error, 'list')
@@ -15,7 +14,7 @@ export default class API {
   }
   show = async ($id) => {
     try {
-      const response = await http.get(`${this.api}/${$id}`)
+      const response = await this.http.get(`${this.api}/${$id}`)
       return response.data
     } catch (error) {
       throw ResponseService(error, 'get', 'item')
@@ -24,7 +23,7 @@ export default class API {
 
   create = async ($data) => {
     try {
-      const response = await http.post(this.api, $data)
+      const response = await this.http.post(this.api, $data)
       return response.data
     } catch (error) {
       throw ResponseService(error, 'create')
@@ -33,7 +32,7 @@ export default class API {
 
   update = async($data) => {
     try {
-      const response = await http.put(`${this.api}/${$data.id}`, $data)
+      const response = await this.http.put(`${this.api}/${$data.id}`, $data)
       return response.data
     } catch (error) {
       throw ResponseService(error, 'update')
@@ -42,7 +41,7 @@ export default class API {
 
   remove = async($id) => {
     try {
-      const response = await http.delete(`${this.api}/${$id}`)
+      const response = await this.http.delete(`${this.api}/${$id}`)
       return response.data
     } catch (error) {
       throw ResponseService(error, 'remove')
